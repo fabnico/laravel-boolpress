@@ -21,6 +21,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/free-zone/hello', 'TestController@index', function () {})->name('MyWelcome');
+Route::get('/free-zone/hello', 'TestController@guest', function () {})->name('MyWelcome');
 
-Route::get('/restricted-zone/hello', 'TestController@index', function () {})->middleware('auth')->name('MyWelcome');
+Route::get('/restricted-zone/hello', 'TestController@logged', function () {})->middleware('auth')->name('MyWelcome');

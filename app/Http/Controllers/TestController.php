@@ -16,15 +16,19 @@ class TestController extends Controller
 
     public function index()
     {
-      $user = Auth::user();
-
-      if (Auth::check()) {
-         $message = "Ciao ". $user->name . "!";
-      } else {
-         $message = "Ciao utente!";
-      }
-      return view('MyWelcome', compact('message'));
     }
+
+    public function guest(){
+      $message = "Ciao utente!";
+      return view('MyWelcome', compact('message'));
+   }
+
+   public function logged(){
+      $user = Auth::user();
+      $message = "Ciao ". $user->name . "!";
+      return view('MyWelcome', compact('message'));
+   }
+
 
     /**
      * Show the form for creating a new resource.
