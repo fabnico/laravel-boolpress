@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::resource('/post', 'postController');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/free-zone/hello', 'TestController@guest', function () {})->name('MyWelcome');
