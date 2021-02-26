@@ -13,8 +13,10 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    {{ __('You are logged in!') }}
+                    {{ __('Login effettuato.') }}
+                    <br>
+                     {{ 'Ciao ' . Auth::user()->name . '.' }}
+                    <a href="{{route('post.index')}}"> Vai all'elenco dei post</a>
                 </div>
             </div>
         </div>

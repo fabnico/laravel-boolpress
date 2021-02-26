@@ -32,7 +32,7 @@ class PostController extends Controller
       if (Auth::check()) {
         $tags = Tags::all();
         $categorie = Categories::all();
-        
+
         return view('post_create', compact('tags', 'categorie'));
       } else {
         return view('auth.login');
@@ -47,27 +47,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-      $data = $request->all();
+      if (Auth::check()) {
+         $data = $request->all();
 
-      $nuovo_post = new Posts();
-      $nuovo_post_info = new Posts_info();
+         $nuovo_post = new Posts();
+         $nuovo_post_info = new Posts_info();
 
-      $nuovo_post->title = $data['title'];
-      $nuovo_post->author = $data['author'];
-      $nuovo_post->category_id = $data['category_id'];
-      $nuovo_post_info->description = $data['description'];
-      $nuovo_post_info->slug = 'example';
+         $nuovo_post->title = $data['title'];
+         $nuovo_post->author = $data['author'];
+         $nuovo_post->category_id = $data['category_id'];
+         $nuovo_post_info->description = $data['description'];
+         $nuovo_post_info->slug = 'example';
 
-      $nuovo_post->save();
+         $nuovo_post->save();
 
-      $nuovo_post_info->post_id = $nuovo_post->id;
+         $nuovo_post_info->post_id = $nuovo_post->id;
 
-      $nuovo_post_info->save();
+         $nuovo_post_info->save();
 
-      $nuovo_post->post_tag()->attach($data['tags']);
+         $nuovo_post->post_tag()->attach($data['tags']);
 
-      return redirect()->route('post.index');
-
+         return redirect()->route('post.index');
+      }
     }
 
     /**
@@ -110,25 +111,27 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-     $data = $request->all();
+      if (Auth::check()) {
+        $data = $request->all();
 
-     $vecchio_post = Posts::find($id);
+        $vecchio_post = Posts::find($id);
 
-     $vecchio_post->post_tag()->detach();
+        $vecchio_post->post_tag()->detach();
 
-     $vecchio_post->title = $data['title'];
-     $vecchio_post->author = $data['author'];
-     $vecchio_post->category_id = $data['category_id'];
+        $vecchio_post->title = $data['title'];
+        $vecchio_post->author = $data['author'];
+        $vecchio_post->category_id = $data['category_id'];
 
-     $vecchio_post->save();
+        $vecchio_post->save();
 
-     $vecchio_post->post_post_info->description = $data['description'];
+        $vecchio_post->post_post_info->description = $data['description'];
 
-     $vecchio_post->post_post_info->save();
+        $vecchio_post->post_post_info->save();
 
-     $vecchio_post->post_tag()->attach($data['tags']);
+        $vecchio_post->post_tag()->attach($data['tags']);
 
-     return redirect()->route('post.index');
+        return redirect()->route('post.index');
+      } 
     }
 
     /**
