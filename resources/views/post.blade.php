@@ -25,10 +25,10 @@
              <tr>
                 <td>{{ $post->title}}</td>
                 <td>{{ $post->author}}</td>
-                <td>{{ $post->post_cat->title}}</td>
-                <td>{{ $post->post_post_info->description}}</td>
+                <td>{{ $post->postToCat->title}}</td>
+                <td>{{ $post->postToInfo->description}}</td>
                 <td>
-                   @foreach ($post->post_tag as $tag)
+                   @foreach ($post->postToTag as $tag)
                      {{$tag->name}}
                    @endforeach
                 </td>

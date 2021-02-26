@@ -23,7 +23,7 @@
           <label for="categoria">Categoria</label>
           <select name="category_id" class="form-control">
             @foreach ($categorie as $categoria)
-              <option @if ($post->post_cat->id == $categoria->id) selected @endif value="{{$categoria->id}}">
+              <option @if ($post->postToCat->id == $categoria->id) selected @endif value="{{$categoria->id}}">
                   {{$categoria->title}}
               </option>
            @endforeach
@@ -31,14 +31,14 @@
         </div>
         <div class="form-group">
           <label for="descrizione">Descrizione</label>
-          <input type="text" class="form-control" value="{{$post->post_post_info->description}}" name="description">
+          <input type="text" class="form-control" value="{{$post->postToInfo->description}}" name="description">
         </div>
         <div class="form-group">
           <label for="tag">Tag</label>
           @foreach($tags as $tag)
             <div>
                 <label for="tags">{{$tag->name}}</label>
-                <input @if ($post->post_tag->contains($tag)) checked  @endif type="checkbox" name="tags[]" value="{{$tag->id}}">
+                <input @if ($post->postToTag->contains($tag)) checked  @endif type="checkbox" name="tags[]" value="{{$tag->id}}">
             </div>
          @endforeach
         </div>

@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Posts_info;
+use App\PostInformation;
 use Faker\Generator as Faker;
 
-$factory->define(Posts_info::class, function (Faker $faker) {
+$factory->define(PostInformation::class, function (Faker $faker) {
     return [
       'post_id' => $faker->unique()->numberBetween(1,200),
       'description' => $faker->paragraph(),

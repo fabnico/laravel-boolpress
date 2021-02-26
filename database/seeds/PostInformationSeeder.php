@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Posts_info;
-class PostsInfoSeed extends Seeder
+use App\PostInformation;
+class PostInformationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class PostsInfoSeed extends Seeder
      */
     public function run()
     {
-      factory(App\Posts_info::class, 200)->create()->each(
+      factory(PostInformation::class, 200)->create()->each(
       function ($el){
       $el->save();
       }

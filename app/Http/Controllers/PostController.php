@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Posts;
-use App\Tags;
-use App\Categories;
-use App\Posts_info;
+use App\Post;
+use App\Tag;
+use App\Category;
+use App\PostInformation;
 
 class PostController extends Controller
 {
@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-      $posts = Posts::all();
+      $posts = Post::all();
       return view('post', compact('posts'));
     }
 
@@ -30,8 +30,8 @@ class PostController extends Controller
     public function create()
     {
       if (Auth::check()) {
-        $tags = Tags::all();
-        $categorie = Categories::all();
+        $tags = Tag::all();
+        $categorie = Category::all();
 
         return view('post_create', compact('tags', 'categorie'));
       } else {
@@ -50,8 +50,8 @@ class PostController extends Controller
       if (Auth::check()) {
          $data = $request->all();
 
-         $nuovo_post = new Posts();
-         $nuovo_post_info = new Posts_info();
+         $nuovo_post = new Post();
+         $nuovo_post_info = new PostInformation();
 
          $nuovo_post->title = $data['title'];
          $nuovo_post->author = $data['author'];
@@ -65,7 +65,7 @@ class PostController extends Controller
 
          $nuovo_post_info->save();
 
-         $nuovo_post->post_tag()->attach($data['tags']);
+         $nuovo_post->postToTag()->attach($data['tags']);
 
          return redirect()->route('post.index');
       }
@@ -79,7 +79,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-      $post = Posts::find($id);
+      $post = Post::find($id);
       return view('post_show', compact('post'));
     }
 
@@ -92,9 +92,9 @@ class PostController extends Controller
     public function edit($id)
     {
       if (Auth::check()) {
-         $post = Posts::find($id);
-         $tags = Tags::all();
-         $categorie = Categories::all();
+         $post = Post::find($id);
+         $tags = Tag::all();
+         $categorie = Category::all();
 
         return view('post_edit', compact('post','tags', 'categorie'));
       } else {
@@ -114,9 +114,9 @@ class PostController extends Controller
       if (Auth::check()) {
         $data = $request->all();
 
-        $vecchio_post = Posts::find($id);
+        $vecchio_post = Post::find($id);
 
-        $vecchio_post->post_tag()->detach();
+        $vecchio_post->postToTag()->detach();
 
         $vecchio_post->title = $data['title'];
         $vecchio_post->author = $data['author'];
@@ -124,14 +124,14 @@ class PostController extends Controller
 
         $vecchio_post->save();
 
-        $vecchio_post->post_post_info->description = $data['description'];
+        $vecchio_post->postToInfo->description = $data['description'];
 
-        $vecchio_post->post_post_info->save();
+        $vecchio_post->postToInfo->save();
 
-        $vecchio_post->post_tag()->attach($data['tags']);
+        $vecchio_post->postToTag()->attach($data['tags']);
 
         return redirect()->route('post.index');
-      } 
+      }
     }
 
     /**
@@ -143,12 +143,12 @@ class PostController extends Controller
     public function destroy($id)
     {
       if (Auth::check()) {
-        $post = Posts::find($id);
-        $tags = Tags::all();
+        $post = Post::find($id);
+        $tags = Tag::all();
 
-        $post->post_post_info->delete();
+        $post->postToInfo->delete();
 
-        $post->post_tag()->detach($tags);
+        $post->postToTag()->detach($tags);
         $post->delete();
 
         return redirect()->route('post.index');

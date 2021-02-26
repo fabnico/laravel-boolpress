@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\posts;
-use App\Tags;
+use App\Post;
+use App\Tag;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
-class posttagSeeder extends Seeder
+class PostTagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,11 +15,11 @@ class posttagSeeder extends Seeder
      */
      public function run(Faker $faker)
      {
-       $posts = Posts::all();
-       $tags = Tags::all();
+       $posts = Post::all();
+       $tags = Tag::all();
        foreach ($posts as $post) {
          for ($i = 1; $i <= $faker->numberBetween(1, $tags->count()); $i++) {
-           DB::table('posttag')->insert([
+           DB::table('post_tag')->insert([
              'post_id' => $post->id,
              'tag_id' => $i
            ]);
